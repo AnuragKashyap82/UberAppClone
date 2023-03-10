@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "444114218789",
+    "project_id": "uberclone-d83fa",
+    "storage_bucket": "uberclone-d83fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444114218789:android:d0f0cdd640996f0efc74cc",
+        "android_client_info": {
+          "package_name": "kashyap.anurag.uberclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444114218789-v0fe99j0gaqjo3ve15a1asoo3281ngbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfSE34Is4O-fWq7VbW_8_teZ56wA5Yi7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444114218789-v0fe99j0gaqjo3ve15a1asoo3281ngbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

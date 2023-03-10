@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".WelcomeActivity">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieView"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/uber">
+    </com.airbnb.lottie.LottieAnimationView>
+
+    <Button
+        android:id="@+id/driverBtn"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="I'm a Driver"
+        android:layout_above="@id/customerBtn"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+        android:background="@drawable/shape_rect_01"
+        android:layout_marginTop="60dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/seg_ui_semibold"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/customerBtn"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="I'm a Customer"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+        android:background="@drawable/shape_rect_01"
+        android:layout_marginTop="26dp"
+        android:elevation="10dp"
+        android:fontFamily="@font/seg_ui_semibold"
+        android:textAllCaps="false"/>
+
+</RelativeLayout>

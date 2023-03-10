@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".DriverRegisterActivity">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieView"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="60dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/uber">
+    </com.airbnb.lottie.LottieAnimationView>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lottieView"
+        android:layout_marginTop="8dp"
+        android:text="Driver Register"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:textSize="16dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/emailEt"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_below="@id/tv"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_rect_02"
+        android:hint="Enter your Email"
+        android:fontFamily="@font/segoe_ui_regular"
+        android:paddingStart="26dp"
+        android:paddingEnd="26dp"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/passwordEt"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_below="@id/emailEt"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_rect_02"
+        android:hint="Enter your Password"
+        android:fontFamily="@font/segoe_ui_regular"
+        android:paddingStart="26dp"
+        android:paddingEnd="26dp"
+        android:inputType="textPassword"
+        android:imeOptions="actionNext"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"/>
+
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/shape_rect_01"
+        android:layout_below="@id/passwordEt"
+        android:layout_marginTop="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Register"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:id="@+id/alreadyAccountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="Already have an account? Login"
+        android:textSize="14sp"
+        android:textColor="@color/gray"
+        android:layout_marginBottom="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/seg_ui_semibold"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
