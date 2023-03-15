@@ -56,4 +56,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.squareup.picasso:picasso:2.8'
 
+    implementation 'com.hbb20:ccp:2.5.0'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
 }

@@ -1,10 +1,15 @@
 package kashyap.anurag.uberclone;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kashyap.anurag.uberclone.databinding.ActivitySettingsBinding;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +30,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -106,13 +115,94 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 checker = "clicked";
 
-                CropImage.activity()
-                        .setAspectRatio(1, 1)
-                        .start(SettingsActivity.this);
+                pickImageGallery();
             }
         });
 
         getUserInformation();
+    }
+
+    private void pickImageGallery() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        galleryActivityResultLauncher0.launch(intent);
+
+    }
+
+    private ActivityResultLauncher<Intent> galleryActivityResultLauncher0 = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        imageUri = data.getData();
+                        binding.profileImage.setImageURI(imageUri);
+                        uploadImages();
+
+                    } else {
+                        Toast.makeText(SettingsActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
+
+    private void uploadImages() {
+        long timestamp = System.currentTimeMillis();
+
+        String filePathAndName = "ProductsImages/" + timestamp + 0;
+        StorageReference reference = FirebaseStorage.getInstance().getReference(filePathAndName);
+        reference.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isSuccessful()) ;
+                        String uploadedImageUrl = "" + uriTask.getResult();
+
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("productId", "" + timestamp);
+                        hashMap.put("productImage", "" + uploadedImageUrl);
+
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("productImages").child(""+timestamp).child("BannerImages").child("0");
+                        databaseReference.setValue(hashMap)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+
+
+                                        } else {
+
+                                            Toast.makeText(SettingsActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                        Toast.makeText(SettingsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(SettingsActivity.this, "Failed to upload image due to\"+e.getMessage()", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double p = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+
+                    }
+                });
     }
 
 
@@ -121,12 +211,9 @@ public class SettingsActivity extends AppCompatActivity {
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE  &&  resultCode==RESULT_OK  &&  data!=null)
+        if (requestCode==6022 &&  resultCode==RESULT_OK  &&  data!=null)
         {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            imageUri = result.getUri();
 
-            binding.profileImage.setImageURI(imageUri);
         }
         else
         {
